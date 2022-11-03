@@ -37,19 +37,19 @@ def get_weather(region):
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.113 Safari/537.36'
     }
     key = config["weather_key"]
-    region_url = "https://geoapi.qweather.com/v2/city/lookup?location={}&key={}".format(region, key)
+    region_url = "https://free-api.heweather.com/s6/weather/forecast?location={}&key={}".format(region, key)
     response = get(region_url, headers=headers).json()
     print(response)
 
     # 获取地区的location--id
     location_id = response['HeWeather6'][0]["basic"]["cid"]
-    weather_url = "https://geoapi.qweather.com/v2/city/lookup?location={}&key={}".format(location_id, key)
+    weather_url = "https://free-api.heweather.com/s6/weather/forecast?location={}&key={}".format(location_id, key)
     response = get(weather_url, headers=headers).json()
     # 天气帅达版
     weather = '白天'+response['HeWeather6'][0]["daily_forecast"][0]["cond_txt_d"]+'，'+'傍晚'+response['HeWeather6'][0]["daily_forecast"][0]["cond_txt_n"]
     # 当前温度
     temp = response['HeWeather6'][0]["daily_forecast"][0]["tmp_min"]+ u"\N{DEGREE SIGN}" + "C"+'—'+response['HeWeather6'][0]["daily_forecast"][0]["tmp_max"]+ u"\N{DEGREE SIGN}" + "C"
-    if int(response['HeWeather6'][0]["daily_forecast"][0]["tmp_min"]) <= 20:
+    if int(response['HeWeather6'][0]["daily_forecast"][0]["tmp_min"]) <= 18:
         xigua = "天气变凉啦，多穿点衣服哦~"
     else:
         xigua = "今天又是很想你的一天~"
